@@ -7,8 +7,9 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/shipengqi/component-base/version"
 	flag "github.com/spf13/pflag"
+
+	"github.com/shipengqi/component-base/version"
 )
 
 // versionValue implements the pflag.Value interface.

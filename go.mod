@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/gosuri/uitable v0.0.4
 	github.com/json-iterator/go v1.1.12
-	github.com/shipengqi/log v0.1.4
+	github.com/shipengqi/log v0.1.6
 	github.com/spf13/pflag v1.0.5
 )
 

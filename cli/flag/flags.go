@@ -16,7 +16,6 @@ func WordSepNormalizeFunc(f *pflag.FlagSet, name string) pflag.NormalizedName {
 	return pflag.NormalizedName(name)
 }
 
-
 // WarnWordSepNormalizeFunc changes and warns for flags that contain "_" separators.
 func WarnWordSepNormalizeFunc(f *pflag.FlagSet, name string) pflag.NormalizedName {
 	if strings.Contains(name, "_") {
@@ -27,7 +26,6 @@ func WarnWordSepNormalizeFunc(f *pflag.FlagSet, name string) pflag.NormalizedNam
 	}
 	return pflag.NormalizedName(name)
 }
-
 
 // InitFlags normalizes, parses, then logs the command line flags.
 func InitFlags(flags *pflag.FlagSet) {
