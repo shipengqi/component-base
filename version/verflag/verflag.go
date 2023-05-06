@@ -1,5 +1,5 @@
 // Package verflag defines utility functions to handle command line flags
-// related to version of app.
+// related to version of Kubernetes.
 package verflag
 
 import (
@@ -12,9 +12,6 @@ import (
 	"github.com/shipengqi/component-base/version"
 )
 
-// versionValue implements the pflag.Value interface.
-// pflag.Value is the interface to the dynamic value stored in a flag.
-// (The default value is represented as a string.)
 type versionValue int
 
 const (
@@ -23,7 +20,6 @@ const (
 	VersionRaw   versionValue = 2
 )
 
-
 const strRawVersion string = "raw"
 
 func (v *versionValue) IsBoolFlag() bool {
@@ -31,7 +27,7 @@ func (v *versionValue) IsBoolFlag() bool {
 }
 
 func (v *versionValue) Get() interface{} {
-	return v
+	return versionValue(*v)
 }
 
 func (v *versionValue) Set(s string) error {
@@ -52,7 +48,7 @@ func (v *versionValue) String() string {
 	if *v == VersionRaw {
 		return strRawVersion
 	}
-	return fmt.Sprintf("%v", *v == VersionTrue)
+	return fmt.Sprintf("%v", bool(*v == VersionTrue))
 }
 
 // Type The type of the flag as required by the pflag.Value interface
@@ -60,7 +56,6 @@ func (v *versionValue) Type() string {
 	return "version"
 }
 
-// VersionVar defines a flag with the specified name and usage string.
 func VersionVar(p *versionValue, name string, value versionValue, usage string) {
 	*p = value
 	flag.Var(p, name, usage)
@@ -68,7 +63,6 @@ func VersionVar(p *versionValue, name string, value versionValue, usage string) 
 	flag.Lookup(name).NoOptDefVal = "true"
 }
 
-// Version wraps the VersionVar function.
 func Version(name string, value versionValue, usage string) *versionValue {
 	p := new(versionValue)
 	VersionVar(p, name, value, usage)
@@ -77,9 +71,7 @@ func Version(name string, value versionValue, usage string) *versionValue {
 
 const versionFlagName = "version"
 
-var (
-	versionFlag = Version(versionFlagName, VersionFalse, "Print version information and quit")
-)
+var versionFlag = Version(versionFlagName, VersionFalse, "Print version information and quit")
 
 // AddFlags registers this package's flags on arbitrary FlagSets, such that they point to the
 // same value as the global flags.
