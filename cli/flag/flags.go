@@ -32,9 +32,9 @@ func WarnWordSepNormalizeFunc(f *pflag.FlagSet, name string) pflag.NormalizedNam
 	return pflag.NormalizedName(name)
 }
 
-// InitFlags normalizes, parses, then logs the command line flags.
+// InitFlags normalizes, parses the command line flags.
 func InitFlags(flags *pflag.FlagSet) {
-	flags.SetNormalizeFunc(WarnWordSepNormalizeFunc)
+	flags.SetNormalizeFunc(WordSepNormalizeFunc)
 	flags.AddGoFlagSet(goflag.CommandLine)
 }
 

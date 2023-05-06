@@ -18,7 +18,7 @@ func TestAddGlobalFlags(t *testing.T) {
 	nfs.SetNormalizeFunc(cliflag.WordSepNormalizeFunc)
 	AddGlobalFlags(nfs, "test-cmd")
 
-	actualFlag := []string{}
+	var actualFlag []string
 	nfs.VisitAll(func(flag *pflag.Flag) {
 		actualFlag = append(actualFlag, flag.Name)
 	})
@@ -44,7 +44,7 @@ func TestAddGlobalFlags(t *testing.T) {
 	}{
 		{
 			// Happy case
-			expectedFlag:  []string{"help", "log-flush-frequency", "v", "vmodule"},
+			expectedFlag:  []string{"help"},
 			matchExpected: false,
 		},
 		{
