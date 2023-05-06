@@ -8,8 +8,7 @@ import (
 )
 
 // MapStringBool can be set from the command line with the format `--flag "string=bool"`.
-// Multiple comma-separated key-value pairs in a single invocation are supported. For example: `--flag
-// "a=true,b=false"`.
+// Multiple comma-separated key-value pairs in a single invocation are supported. For example: `--flag "a=true,b=false"`.
 // Multiple flag invocations are supported. For example: `--flag "a=true" --flag "b=false"`.
 type MapStringBool struct {
 	Map         *map[string]bool
@@ -17,17 +16,17 @@ type MapStringBool struct {
 }
 
 // NewMapStringBool takes a pointer to a map[string]string and returns the
-// MapStringBool flag parsing shim for that map.
+// MapStringBool flag parsing shim for that map
 func NewMapStringBool(m *map[string]bool) *MapStringBool {
 	return &MapStringBool{Map: m}
 }
 
-// String implements github.com/spf13/pflag.Value.
+// String implements github.com/spf13/pflag.Value
 func (m *MapStringBool) String() string {
 	if m == nil || m.Map == nil {
 		return ""
 	}
-	pairs := []string{}
+	var pairs []string
 	for k, v := range *m.Map {
 		pairs = append(pairs, fmt.Sprintf("%s=%t", k, v))
 	}
@@ -35,7 +34,7 @@ func (m *MapStringBool) String() string {
 	return strings.Join(pairs, ",")
 }
 
-// Set implements github.com/spf13/pflag.Value.
+// Set implements github.com/spf13/pflag.Value
 func (m *MapStringBool) Set(value string) error {
 	if m.Map == nil {
 		return fmt.Errorf("no target (nil pointer to map[string]bool)")
@@ -64,12 +63,12 @@ func (m *MapStringBool) Set(value string) error {
 	return nil
 }
 
-// Type implements github.com/spf13/pflag.Value.
+// Type implements github.com/spf13/pflag.Value
 func (*MapStringBool) Type() string {
 	return "mapStringBool"
 }
 
-// Empty implements OmitEmpty.
+// Empty implements OmitEmpty
 func (m *MapStringBool) Empty() bool {
 	return len(*m.Map) == 0
 }

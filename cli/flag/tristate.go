@@ -40,7 +40,10 @@ func (f *Tristate) Set(value string) error {
 }
 
 func (f Tristate) Provided() bool {
-	return f != Unset
+	if f != Unset {
+		return true
+	}
+	return false
 }
 
 func (f *Tristate) Type() string {

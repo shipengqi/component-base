@@ -8,6 +8,8 @@ import (
 	"github.com/spf13/pflag"
 )
 
+var underscoreWarnings = make(map[string]bool)
+
 // WordSepNormalizeFunc changes all flags that contain "_" separators.
 func WordSepNormalizeFunc(f *pflag.FlagSet, name string) pflag.NormalizedName {
 	if strings.Contains(name, "_") {
@@ -20,7 +22,10 @@ func WordSepNormalizeFunc(f *pflag.FlagSet, name string) pflag.NormalizedName {
 func WarnWordSepNormalizeFunc(f *pflag.FlagSet, name string) pflag.NormalizedName {
 	if strings.Contains(name, "_") {
 		nname := strings.ReplaceAll(name, "_", "-")
-		log.Warnf("using an underscore in a flag name is not supported. %s has been converted to %s.", name, nname)
+		if _, alreadyWarned := underscoreWarnings[name]; !alreadyWarned {
+			log.Warnf("using an underscore in a flag name is not supported. %s has been converted to %s.", name, nname)
+			underscoreWarnings[name] = true
+		}
 
 		return pflag.NormalizedName(nname)
 	}
@@ -29,11 +34,11 @@ func WarnWordSepNormalizeFunc(f *pflag.FlagSet, name string) pflag.NormalizedNam
 
 // InitFlags normalizes, parses, then logs the command line flags.
 func InitFlags(flags *pflag.FlagSet) {
-	flags.SetNormalizeFunc(WordSepNormalizeFunc)
+	flags.SetNormalizeFunc(WarnWordSepNormalizeFunc)
 	flags.AddGoFlagSet(goflag.CommandLine)
 }
 
-// PrintFlags logs the flags in the flagset.
+// PrintFlags logs the flags in the pflag.FlagSet.
 func PrintFlags(flags *pflag.FlagSet) {
 	flags.VisitAll(func(flag *pflag.Flag) {
 		log.Debugf("FLAG: --%s=%q", flag.Name, flag.Value)

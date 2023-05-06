@@ -1,7 +1,6 @@
 package flag
 
-// StringFlag is a string flag compatible with flags and pflags that keeps track of whether it had a value supplied or
-// not.
+// StringFlag is a string flag compatible with flags and pflags that keeps track of whether it had a value supplied or not.
 type StringFlag struct {
 	// If Set has been invoked this value is true
 	provided bool

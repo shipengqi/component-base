@@ -38,16 +38,16 @@ func (i Info) ToJSON() string {
 // returns the result.
 func (i Info) Text() ([]byte, error) {
 	table := uitable.New()
-	table.RightAlign(0)
+	// table.RightAlign(0)
 	table.MaxColWidth = 80
 	table.Separator = " "
-	table.AddRow("gitVersion:", i.Version)
-	table.AddRow("gitCommit:", i.GitCommit)
-	table.AddRow("gitTreeState:", i.GitTreeState)
-	table.AddRow("buildTime:", i.BuildTime)
-	table.AddRow("goVersion:", i.GoVersion)
-	table.AddRow("compiler:", i.Compiler)
-	table.AddRow("platform:", i.Platform)
+	table.AddRow("Version:", i.Version)
+	table.AddRow("Commit:", i.GitCommit)
+	table.AddRow("GitTreeState:", i.GitTreeState)
+	table.AddRow("BuildTime:", i.BuildTime)
+	table.AddRow("GoVersion:", i.GoVersion)
+	table.AddRow("Compiler:", i.Compiler)
+	table.AddRow("Platform:", i.Platform)
 
 	return table.Bytes(), nil
 }

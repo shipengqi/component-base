@@ -61,7 +61,7 @@ type NamedCertKeyArray struct {
 
 var _ flag.Value = &NamedCertKeyArray{}
 
-// NewNamedKeyCertArray creates a new NamedCertKeyArray with the internal value
+// NewNamedCertKeyArray creates a new NamedCertKeyArray with the internal value
 // pointing to p.
 func NewNamedCertKeyArray(p *[]NamedCertKey) *NamedCertKeyArray {
 	return &NamedCertKeyArray{

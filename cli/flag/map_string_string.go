@@ -18,13 +18,13 @@ type MapStringString struct {
 }
 
 // NewMapStringString takes a pointer to a map[string]string and returns the
-// MapStringString flag parsing shim for that map.
+// MapStringString flag parsing shim for that map
 func NewMapStringString(m *map[string]string) *MapStringString {
 	return &MapStringString{Map: m}
 }
 
 // NewMapStringStringNoSplit takes a pointer to a map[string]string and sets `NoSplit`
-// value to `true` and returns the MapStringString flag parsing shim for that map.
+// value to `true` and returns the MapStringString flag parsing shim for that map
 func NewMapStringStringNoSplit(m *map[string]string) *MapStringString {
 	return &MapStringString{
 		Map:     m,
@@ -32,12 +32,12 @@ func NewMapStringStringNoSplit(m *map[string]string) *MapStringString {
 	}
 }
 
-// String implements github.com/spf13/pflag.Value.
+// String implements github.com/spf13/pflag.Value
 func (m *MapStringString) String() string {
 	if m == nil || m.Map == nil {
 		return ""
 	}
-	pairs := []string{}
+	var pairs []string
 	for k, v := range *m.Map {
 		pairs = append(pairs, fmt.Sprintf("%s=%s", k, v))
 	}
@@ -45,7 +45,7 @@ func (m *MapStringString) String() string {
 	return strings.Join(pairs, ",")
 }
 
-// Set implements github.com/spf13/pflag.Value.
+// Set implements github.com/spf13/pflag.Value
 func (m *MapStringString) Set(value string) error {
 	if m.Map == nil {
 		return fmt.Errorf("no target (nil pointer to map[string]string)")
@@ -82,14 +82,15 @@ func (m *MapStringString) Set(value string) error {
 	v := strings.TrimSpace(arr[1])
 	(*m.Map)[k] = v
 	return nil
+
 }
 
-// Type implements github.com/spf13/pflag.Value.
+// Type implements github.com/spf13/pflag.Value
 func (*MapStringString) Type() string {
 	return "mapStringString"
 }
 
-// Empty implements OmitEmpty.
+// Empty implements OmitEmpty
 func (m *MapStringString) Empty() bool {
 	return len(*m.Map) == 0
 }

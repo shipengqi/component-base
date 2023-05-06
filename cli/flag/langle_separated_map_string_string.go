@@ -15,12 +15,12 @@ type LangleSeparatedMapStringString struct {
 }
 
 // NewLangleSeparatedMapStringString takes a pointer to a map[string]string and returns the
-// LangleSeparatedMapStringString flag parsing shim for that map.
+// LangleSeparatedMapStringString flag parsing shim for that map
 func NewLangleSeparatedMapStringString(m *map[string]string) *LangleSeparatedMapStringString {
 	return &LangleSeparatedMapStringString{Map: m}
 }
 
-// String implements github.com/spf13/pflag.Value.
+// String implements github.com/spf13/pflag.Value
 func (m *LangleSeparatedMapStringString) String() string {
 	var pairs []string
 	for k, v := range *m.Map {
@@ -30,7 +30,7 @@ func (m *LangleSeparatedMapStringString) String() string {
 	return strings.Join(pairs, ",")
 }
 
-// Set implements github.com/spf13/pflag.Value.
+// Set implements github.com/spf13/pflag.Value
 func (m *LangleSeparatedMapStringString) Set(value string) error {
 	if m.Map == nil {
 		return fmt.Errorf("no target (nil pointer to map[string]string)")
@@ -55,12 +55,12 @@ func (m *LangleSeparatedMapStringString) Set(value string) error {
 	return nil
 }
 
-// Type implements github.com/spf13/pflag.Value.
+// Type implements github.com/spf13/pflag.Value
 func (*LangleSeparatedMapStringString) Type() string {
 	return "mapStringString"
 }
 
-// Empty implements OmitEmpty.
+// Empty implements OmitEmpty
 func (m *LangleSeparatedMapStringString) Empty() bool {
 	return len(*m.Map) == 0
 }

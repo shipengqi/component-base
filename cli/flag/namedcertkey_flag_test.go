@@ -100,7 +100,7 @@ func TestNamedCertKeyArrayFlag(t *testing.T) {
 
 		fs.Var(NewNamedCertKeyArray(&nkcs), "tls-sni-cert-key", "usage")
 
-		args := []string{}
+		var args []string
 		for _, a := range test.args {
 			args = append(args, fmt.Sprintf("--tls-sni-cert-key=%s", a))
 		}
