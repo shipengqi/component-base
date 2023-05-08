@@ -5,13 +5,32 @@ import (
 	"fmt"
 	"io"
 	"strings"
+	"text/template"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
 
+var templateFuncs = template.FuncMap{
+	"trim": strings.TrimSpace,
+	"rpad": rpad,
+	"gt":   cobra.Gt,
+	"eq":   cobra.Eq,
+}
+
 const (
-	usageFmt = "Usage:\n  %s\n"
+	usageFmt   = "Usage:\n  %s\n"
+	aliasesFmt = `{{if gt (len .Aliases) 0}}
+Aliases:
+  {{.NameAndAliases}}{{end}}`
+	commandsFmt = `{{if .HasAvailableSubCommands}}
+Available Commands:{{range .Commands}}{{if (or .IsAvailableCommand (eq .Name "help"))}}
+  {{rpad .Name .NamePadding }} {{.Short}}{{end}}{{end}}{{end}}`
+	examplesFmt = `{{if .HasExample}}
+Examples:
+  {{.Example}}{{end}}`
+	moreFmt = `{{if .HasAvailableSubCommands}}
+Use "{{.CommandPath}} [command] --help" for more information about a command.{{end}}`
 )
 
 // NamedFlagSets stores named flag sets in the order of calling FlagSet.
@@ -74,16 +93,58 @@ func PrintSections(w io.Writer, fss NamedFlagSets, cols int) {
 	}
 }
 
+// PrintAliases prints the aliases.
+func PrintAliases(w io.Writer, cmd *cobra.Command) {
+	_ = tmpl(w, aliasesFmt, cmd)
+}
+
+// PrintSubCommands prints the sub commands.
+func PrintSubCommands(w io.Writer, cmd *cobra.Command) {
+	_ = tmpl(w, commandsFmt, cmd)
+}
+
+// PrintExamples prints the examples.
+func PrintExamples(w io.Writer, cmd *cobra.Command) {
+	_ = tmpl(w, examplesFmt, cmd)
+}
+
+// PrintMore prints the more information.
+func PrintMore(w io.Writer, cmd *cobra.Command) {
+	_ = tmpl(w, moreFmt, cmd)
+}
+
 // SetUsageAndHelpFunc set both usage and help function.
 // Print the flag sets we need instead of all of them.
 func SetUsageAndHelpFunc(cmd *cobra.Command, fss NamedFlagSets, cols int) {
 	cmd.SetUsageFunc(func(cmd *cobra.Command) error {
 		_, _ = fmt.Fprintf(cmd.OutOrStderr(), usageFmt, cmd.UseLine())
+		PrintAliases(cmd.OutOrStderr(), cmd)
+		PrintSubCommands(cmd.OutOrStderr(), cmd)
 		PrintSections(cmd.OutOrStderr(), fss, cols)
+		PrintExamples(cmd.OutOrStderr(), cmd)
+		PrintMore(cmd.OutOrStderr(), cmd)
 		return nil
 	})
 	cmd.SetHelpFunc(func(cmd *cobra.Command, args []string) {
 		_, _ = fmt.Fprintf(cmd.OutOrStdout(), "%s\n\n"+usageFmt, cmd.Long, cmd.UseLine())
-		PrintSections(cmd.OutOrStdout(), fss, cols)
+		PrintAliases(cmd.OutOrStderr(), cmd)
+		PrintSubCommands(cmd.OutOrStderr(), cmd)
+		PrintSections(cmd.OutOrStderr(), fss, cols)
+		PrintExamples(cmd.OutOrStderr(), cmd)
+		PrintMore(cmd.OutOrStderr(), cmd)
 	})
+}
+
+// tmpl executes the given template text on data, writing the result to w.
+func tmpl(w io.Writer, text string, data interface{}) error {
+	t := template.New("top")
+	t.Funcs(templateFuncs)
+	template.Must(t.Parse(text))
+	return t.Execute(w, data)
+}
+
+// rpad adds padding to the right of a string.
+func rpad(s string, padding int) string {
+	formattedString := fmt.Sprintf("%%-%ds", padding)
+	return fmt.Sprintf(formattedString, s)
 }
