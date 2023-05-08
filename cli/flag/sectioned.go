@@ -22,13 +22,19 @@ const (
 	usageFmt   = "Usage:\n  %s\n"
 	aliasesFmt = `{{if gt (len .Aliases) 0}}
 Aliases:
-  {{.NameAndAliases}}{{end}}`
+  {{.NameAndAliases}}
+
+{{end}}`
 	commandsFmt = `{{if .HasAvailableSubCommands}}
 Available Commands:{{range .Commands}}{{if (or .IsAvailableCommand (eq .Name "help"))}}
-  {{rpad .Name .NamePadding }} {{.Short}}{{end}}{{end}}{{end}}`
+  {{rpad .Name .NamePadding }} {{.Short}}{{end}}{{end}}
+
+{{end}}`
 	examplesFmt = `{{if .HasExample}}
 Examples:
-  {{.Example}}{{end}}`
+  {{.Example}}
+
+{{end}}`
 	moreFmt = `{{if .HasAvailableSubCommands}}
 Use "{{.CommandPath}} [command] --help" for more information about a command.{{end}}`
 )
