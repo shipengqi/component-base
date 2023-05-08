@@ -23,20 +23,18 @@ const (
 	aliasesFmt = `{{if gt (len .Aliases) 0}}
 Aliases:
   {{.NameAndAliases}}
-
 {{end}}`
 	commandsFmt = `{{if .HasAvailableSubCommands}}
 Available Commands:{{range .Commands}}{{if (or .IsAvailableCommand (eq .Name "help"))}}
   {{rpad .Name .NamePadding }} {{.Short}}{{end}}{{end}}
-
 {{end}}`
 	examplesFmt = `{{if .HasExample}}
 Examples:
   {{.Example}}
-
 {{end}}`
 	moreFmt = `{{if .HasAvailableSubCommands}}
-Use "{{.CommandPath}} [command] --help" for more information about a command.{{end}}`
+Use "{{.CommandPath}} [command] --help" for more information about a command.
+{{end}}`
 )
 
 // NamedFlagSets stores named flag sets in the order of calling FlagSet.
