@@ -2,4 +2,4 @@
 
 ## Purpose
 
-The proposal is essentially about refactoring the IDM core package structure in a way that all core components may share common code.
+The proposal is essentially about refactoring the core package structure in a way that all core components may share common code.
