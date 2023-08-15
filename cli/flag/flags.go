@@ -41,6 +41,6 @@ func InitFlags(flags *pflag.FlagSet) {
 // PrintFlags logs the flags in the pflag.FlagSet.
 func PrintFlags(flags *pflag.FlagSet) {
 	flags.VisitAll(func(flag *pflag.Flag) {
-		log.Debugf("FLAG: --%s=%q", flag.Name, flag.Value)
+		log.Infof("FLAG: --%s=%q", flag.Name, flag.Value)
 	})
 }
