@@ -11,7 +11,7 @@ import (
 var underscoreWarnings = make(map[string]bool)
 
 // WordSepNormalizeFunc changes all flags that contain "_" separators.
-func WordSepNormalizeFunc(f *pflag.FlagSet, name string) pflag.NormalizedName {
+func WordSepNormalizeFunc(_ *pflag.FlagSet, name string) pflag.NormalizedName {
 	if strings.Contains(name, "_") {
 		return pflag.NormalizedName(strings.ReplaceAll(name, "_", "-"))
 	}
@@ -19,7 +19,7 @@ func WordSepNormalizeFunc(f *pflag.FlagSet, name string) pflag.NormalizedName {
 }
 
 // WarnWordSepNormalizeFunc changes and warns for flags that contain "_" separators.
-func WarnWordSepNormalizeFunc(f *pflag.FlagSet, name string) pflag.NormalizedName {
+func WarnWordSepNormalizeFunc(_ *pflag.FlagSet, name string) pflag.NormalizedName {
 	if strings.Contains(name, "_") {
 		nname := strings.ReplaceAll(name, "_", "-")
 		if _, alreadyWarned := underscoreWarnings[name]; !alreadyWarned {
@@ -41,6 +41,6 @@ func InitFlags(flags *pflag.FlagSet) {
 // PrintFlags logs the flags in the pflag.FlagSet.
 func PrintFlags(flags *pflag.FlagSet) {
 	flags.VisitAll(func(flag *pflag.Flag) {
-		log.Debugf("FLAG: --%s=%q", flag.Name, flag.Value)
+		log.Infof("FLAG: --%s=%q", flag.Name, flag.Value)
 	})
 }

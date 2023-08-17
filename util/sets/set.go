@@ -103,9 +103,9 @@ func (s Set[T]) Clone() Set[T] {
 // s2 = {a1, a2, a4, a5}
 // s1.Difference(s2) = {a3}
 // s2.Difference(s1) = {a4, a5}
-func (s1 Set[T]) Difference(s2 Set[T]) Set[T] {
+func (s Set[T]) Difference(s2 Set[T]) Set[T] {
 	result := New[T]()
-	for key := range s1 {
+	for key := range s {
 		if !s2.Has(key) {
 			result.Insert(key)
 		}
@@ -119,8 +119,8 @@ func (s1 Set[T]) Difference(s2 Set[T]) Set[T] {
 // s2 = {a1, a2, a4, a5}
 // s1.SymmetricDifference(s2) = {a3, a4, a5}
 // s2.SymmetricDifference(s1) = {a3, a4, a5}
-func (s1 Set[T]) SymmetricDifference(s2 Set[T]) Set[T] {
-	return s1.Difference(s2).Union(s2.Difference(s1))
+func (s Set[T]) SymmetricDifference(s2 Set[T]) Set[T] {
+	return s.Difference(s2).Union(s2.Difference(s))
 }
 
 // Union returns a new set which includes items in either s1 or s2.
@@ -129,8 +129,8 @@ func (s1 Set[T]) SymmetricDifference(s2 Set[T]) Set[T] {
 // s2 = {a3, a4}
 // s1.Union(s2) = {a1, a2, a3, a4}
 // s2.Union(s1) = {a1, a2, a3, a4}
-func (s1 Set[T]) Union(s2 Set[T]) Set[T] {
-	result := s1.Clone()
+func (s Set[T]) Union(s2 Set[T]) Set[T] {
+	result := s.Clone()
 	for key := range s2 {
 		result.Insert(key)
 	}
@@ -142,15 +142,15 @@ func (s1 Set[T]) Union(s2 Set[T]) Set[T] {
 // s1 = {a1, a2}
 // s2 = {a2, a3}
 // s1.Intersection(s2) = {a2}
-func (s1 Set[T]) Intersection(s2 Set[T]) Set[T] {
+func (s Set[T]) Intersection(s2 Set[T]) Set[T] {
 	var walk, other Set[T]
 	result := New[T]()
-	if s1.Len() < s2.Len() {
-		walk = s1
+	if s.Len() < s2.Len() {
+		walk = s
 		other = s2
 	} else {
 		walk = s2
-		other = s1
+		other = s
 	}
 	for key := range walk {
 		if other.Has(key) {
@@ -161,9 +161,9 @@ func (s1 Set[T]) Intersection(s2 Set[T]) Set[T] {
 }
 
 // IsSuperset returns true if and only if s1 is a superset of s2.
-func (s1 Set[T]) IsSuperset(s2 Set[T]) bool {
+func (s Set[T]) IsSuperset(s2 Set[T]) bool {
 	for item := range s2 {
-		if !s1.Has(item) {
+		if !s.Has(item) {
 			return false
 		}
 	}
@@ -173,8 +173,8 @@ func (s1 Set[T]) IsSuperset(s2 Set[T]) bool {
 // Equal returns true if and only if s1 is equal (as a set) to s2.
 // Two sets are equal if their membership is identical.
 // (In practice, this means same elements, order doesn't matter)
-func (s1 Set[T]) Equal(s2 Set[T]) bool {
-	return len(s1) == len(s2) && s1.IsSuperset(s2)
+func (s Set[T]) Equal(s2 Set[T]) bool {
+	return len(s) == len(s2) && s.IsSuperset(s2)
 }
 
 type sortableSliceOfGeneric[T ordered] []T
