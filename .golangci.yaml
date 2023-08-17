@@ -29,3 +29,9 @@ linters-settings:
     simplify: true
   dupl:
     threshold: 600
+
+issues:
+  exclude-rules:
+    - path: 'util\/sets\/.*\.go'
+      linters:
+        - revive

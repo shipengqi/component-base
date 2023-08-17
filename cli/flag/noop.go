@@ -17,7 +17,7 @@ func (NoOp) String() string {
 	return ""
 }
 
-func (NoOp) Set(val string) error {
+func (NoOp) Set(_ string) error {
 	return nil
 }
 
