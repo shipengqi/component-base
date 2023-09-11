@@ -2,13 +2,17 @@ package flag
 
 import (
 	goflag "flag"
+	"fmt"
 	"strings"
 
-	"github.com/shipengqi/log"
 	"github.com/spf13/pflag"
 )
 
 var underscoreWarnings = make(map[string]bool)
+
+type PrintLogger interface {
+	Printf(template string, args ...interface{})
+}
 
 // WordSepNormalizeFunc changes all flags that contain "_" separators.
 func WordSepNormalizeFunc(_ *pflag.FlagSet, name string) pflag.NormalizedName {
@@ -23,7 +27,7 @@ func WarnWordSepNormalizeFunc(_ *pflag.FlagSet, name string) pflag.NormalizedNam
 	if strings.Contains(name, "_") {
 		nname := strings.ReplaceAll(name, "_", "-")
 		if _, alreadyWarned := underscoreWarnings[name]; !alreadyWarned {
-			log.Warnf("using an underscore in a flag name is not supported. %s has been converted to %s.", name, nname)
+			fmt.Printf("using an underscore in a flag name is not supported. %s has been converted to %s.\n", name, nname)
 			underscoreWarnings[name] = true
 		}
 
@@ -39,8 +43,8 @@ func InitFlags(flags *pflag.FlagSet) {
 }
 
 // PrintFlags logs the flags in the pflag.FlagSet.
-func PrintFlags(flags *pflag.FlagSet) {
+func PrintFlags(flags *pflag.FlagSet, logger PrintLogger) {
 	flags.VisitAll(func(flag *pflag.Flag) {
-		log.Infof("FLAG: --%s=%q", flag.Name, flag.Value)
+		logger.Printf("FLAG: --%s=%q", flag.Name, flag.Value)
 	})
 }
