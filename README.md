@@ -92,6 +92,7 @@ import (
 	cliflag "github.com/shipengqi/component-base/cli/flag"
 	"github.com/shipengqi/component-base/cli/globalflag"
 	"github.com/shipengqi/component-base/term"
+	"github.com/shipengqi/component-base/version/verflag"
 )
 
 func main() {
@@ -99,6 +100,8 @@ func main() {
 		Use:   "demo",
 		Short: "demo description",
 		RunE:  func (c *cobra.Command, args []string) error {
+			// print version message if the --version flag was passed
+			verflag.PrintAndExitIfRequested()
 			return nil
 		},
 	}
@@ -117,7 +120,11 @@ func main() {
 	}
 
 	// applies global help flag to this command 
-	globalflag.AddGlobalFlags(fss.FlagSet("global"), cmd.Name())
+	globalSet := fss.FlagSet("global")
+	globalflag.AddGlobalFlags(globalSet, cmd.Name())
+
+	// add version flag to the global flag set
+	verflag.AddFlags(globalSet)
 	
 	// set both usage and help function.
 	width, _, _ := term.TerminalSize(cmd.OutOrStdout())
