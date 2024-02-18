@@ -129,7 +129,7 @@ func SetUsageAndHelpFunc(cmd *cobra.Command, fss NamedFlagSets, cols int) {
 		PrintMore(cmd.OutOrStderr(), cmd)
 		return nil
 	})
-	cmd.SetHelpFunc(func(cmd *cobra.Command, args []string) {
+	cmd.SetHelpFunc(func(cmd *cobra.Command, _ []string) {
 		_, _ = fmt.Fprintf(cmd.OutOrStdout(), "%s\n\n"+usageFmt, cmd.Long, cmd.UseLine())
 		PrintAliases(cmd.OutOrStderr(), cmd)
 		PrintSubCommands(cmd.OutOrStderr(), cmd)
