@@ -10,7 +10,7 @@ import (
 
 var underscoreWarnings = make(map[string]bool)
 
-type PrintLogger interface {
+type FlagPrinter interface {
 	Printf(template string, args ...interface{})
 }
 
@@ -43,7 +43,7 @@ func InitFlags(flags *pflag.FlagSet) {
 }
 
 // PrintFlags logs the flags in the pflag.FlagSet.
-func PrintFlags(flags *pflag.FlagSet, logger PrintLogger) {
+func PrintFlags(flags *pflag.FlagSet, logger FlagPrinter) {
 	flags.VisitAll(func(flag *pflag.Flag) {
 		logger.Printf("FLAG: --%s=%q", flag.Name, flag.Value)
 	})
