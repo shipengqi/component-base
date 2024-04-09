@@ -5,6 +5,8 @@
 [![release](https://img.shields.io/github/release/shipengqi/component-base.svg)](https://github.com/shipengqi/component-base/releases)
 [![license](https://img.shields.io/github/license/shipengqi/component-base)](https://github.com/shipengqi/component-base/blob/main/LICENSE)
 
+Shared code for core components.
+
 ## Getting Started
 
 ### json
