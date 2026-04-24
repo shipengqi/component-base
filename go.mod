@@ -7,13 +7,13 @@ require (
 	github.com/goccy/go-json v0.10.3
 	github.com/gosuri/uitable v0.0.4
 	github.com/json-iterator/go v1.1.12
-	github.com/moby/term v0.5.0
+	github.com/moby/term v0.5.2
 	github.com/spf13/cobra v1.8.1
 	github.com/spf13/pflag v1.0.5
 )
 
 require (
-	github.com/Azure/go-ansiterm v0.0.0-20210617225240-d185dfc1b5a1 // indirect
+	github.com/Azure/go-ansiterm v0.0.0-20250102033503-faa5f7b0171c // indirect
 	github.com/bytedance/sonic/loader v0.2.0 // indirect
 	github.com/cloudwego/base64x v0.1.4 // indirect
 	github.com/cloudwego/iasm v0.2.0 // indirect
