@@ -8,7 +8,7 @@ require (
 	github.com/gosuri/uitable v0.0.4
 	github.com/json-iterator/go v1.1.12
 	github.com/moby/term v0.5.2
-	github.com/spf13/cobra v1.8.1
+	github.com/spf13/cobra v1.10.2
 	github.com/spf13/pflag v1.0.10
 )
 
