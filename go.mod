@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/bytedance/sonic v1.12.0
-	github.com/goccy/go-json v0.10.3
+	github.com/goccy/go-json v0.10.6
 	github.com/gosuri/uitable v0.0.4
 	github.com/json-iterator/go v1.1.12
 	github.com/moby/term v0.5.0
