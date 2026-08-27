@@ -3,7 +3,7 @@ module github.com/shipengqi/component-base
 go 1.20
 
 require (
-	github.com/bytedance/sonic v1.15.2
+	github.com/bytedance/sonic v1.15.3
 	github.com/goccy/go-json v0.10.6
 	github.com/gosuri/uitable v0.0.4
 	github.com/json-iterator/go v1.1.12
@@ -15,7 +15,7 @@ require (
 require (
 	github.com/Azure/go-ansiterm v0.0.0-20250102033503-faa5f7b0171c // indirect
 	github.com/bytedance/gopkg v0.1.3 // indirect
-	github.com/bytedance/sonic/loader v0.5.1 // indirect
+	github.com/bytedance/sonic/loader v0.5.2 // indirect
 	github.com/cloudwego/base64x v0.1.6 // indirect
 	github.com/fatih/color v1.13.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
