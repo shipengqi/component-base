@@ -3,7 +3,7 @@ module github.com/shipengqi/component-base
 go 1.20
 
 require (
-	github.com/bytedance/sonic v1.15.3
+	github.com/bytedance/sonic v1.15.4
 	github.com/goccy/go-json v0.10.6
 	github.com/gosuri/uitable v0.0.4
 	github.com/json-iterator/go v1.1.12
