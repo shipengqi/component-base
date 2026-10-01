@@ -1,10 +1,10 @@
 module github.com/shipengqi/component-base
 
-go 1.20
+go 1.21
 
 require (
 	github.com/bytedance/sonic v1.15.4
-	github.com/goccy/go-json v0.10.6
+	github.com/goccy/go-json v0.11.1
 	github.com/gosuri/uitable v0.0.4
 	github.com/json-iterator/go v1.1.12
 	github.com/moby/term v0.5.2
