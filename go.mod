@@ -4,7 +4,7 @@ go 1.23
 
 require (
 	github.com/bytedance/sonic v1.15.5
-	github.com/goccy/go-json v0.11.2
+	github.com/goccy/go-json v0.12.0
 	github.com/gosuri/uitable v0.0.4
 	github.com/json-iterator/go v1.1.12
 	github.com/moby/term v0.5.2
